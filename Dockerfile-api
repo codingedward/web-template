@@ -1,0 +1,18 @@
+FROM node:13.5.0-alpine as builder
+
+EXPOSE 4000
+
+RUN mkdir /app
+WORKDIR /app
+RUN yarn global add pm2
+COPY ./api/package.json yarn.lock ./
+RUN yarn install
+COPY ./api ./
+
+FROM builder as production
+RUN yarn build
+CMD [ "pm2-runtime", "start", "yarn", "--", "start" ]
+
+FROM builder as development
+CMD [ "yarn", "dev" ]
+

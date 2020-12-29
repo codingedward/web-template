@@ -1,0 +1,19 @@
+{
+  "name": "default",
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "test",
+  "password": "test",
+  "database": "test",
+  "synchronize": true,
+  "logging": true,
+  "entities": ["api/models/**/*.ts"],
+  "migrations": ["api/database/migration/**/*.ts"],
+  "subscribers": ["api/database/subscriber/**/*.ts"],
+  "cli": {
+    "entitiesDir": "api/models",
+    "migrationsDir": "api/database/migrations",
+    "subscribersDir": "api/database/subscriber"
+  }
+}

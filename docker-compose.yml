@@ -1,0 +1,49 @@
+version: "3.7"
+env_file:
+  - env.docker
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile-web
+      target: production
+    image: web_image
+    container_name: web
+    restart: always
+    volumes:
+      - node_modules:/app/node_modules
+    networks:
+      - frontend
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile-api
+      target: production
+    image: api_image
+    container_name: web
+    restart: always
+    volumes:
+      - node_modules:/app/node_modules
+    networks:
+      - backend
+  db:
+    image: mysql:5.7
+    container_name: db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - backend
+
+volumes:
+  node_modules:
+  mysql:
+  minio:
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
